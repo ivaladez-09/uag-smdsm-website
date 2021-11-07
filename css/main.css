@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header .nav-item:hover {
+    background-color:darkgray;
+}
+
+header .cover {
+    height: 650px;
+    background-image: url("../assets/cover.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(255, 255, 255, .6);
+    background-blend-mode: color;
+}
+
+.card-title {
+    min-height: 2.5rem;
+}
+
+.card-text {
+    min-height: 10rem;
+}
+
+.page-footer {
+    background-color: #222;
+    color: #ccc;
+    padding: 60px 0 30px;
+}
+.footer-copyright {
+    color: #666;
+    padding: 40px 0;
+}

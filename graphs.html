@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graficas estadísticas</title>
+</head>
+<body>
+    <div>
+        <canvas id="myChart1"></canvas>
+        <canvas id="myChart2"></canvas>
+        <canvas id="myChart3"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+      var ctx1 = document.getElementById('myChart1');
+      var myChart = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+              labels: ['0-18 años', '19-40 años', '41-100 años'],
+              datasets: [
+                {
+                  label: 'Hombres',
+                  data: [34, 41, 27],
+                  backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+                  ],
+                  borderColor: [
+                  'rgba(255, 99, 132, 1)'
+                  ],
+                  borderWidth: 1
+                },
+                {
+                  label: 'Mujeres',
+                  data: [15, 37, 32],
+                  backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)'
+                  ],
+                  borderColor: [
+                    'rgba(75, 192, 192, 1)'
+                  ],
+                  borderWidth: 1
+                }
+              ]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              },
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: 'Usuarios por género y rango de edad'
+                }
+              }
+          }
+      });
+    </script>
+
+    <script>
+      var ctx1 = document.getElementById('myChart2');
+      var myChart = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+              labels: ['Obesidad centralizada', 'Trigliceridos', 'Colesterol HDL', 'Presión arterial', 'Glucosa en la sangre'],
+              datasets: [
+                {
+                  label: 'Hombres',
+                  data: [12, 21, 27, 17, 5, 14, 3],
+                  backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+                  ],
+                  borderColor: [
+                  'rgba(255, 99, 132, 1)'
+                  ],
+                  borderWidth: 1
+                },
+                {
+                  label: 'Mujeres',
+                  data: [10, 23, 21, 11, 8, 17, 7],
+                  backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)'
+                  ],
+                  borderColor: [
+                    'rgba(75, 192, 192, 1)'
+                  ],
+                  borderWidth: 1
+                }
+              ]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              },
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: 'Usuarios por género y factor de riesgo'
+                }
+              }
+          }
+      });
+    </script>
+
+    <script>
+      var ctx1 = document.getElementById('myChart3');
+      var myChart = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+              labels: ['Diabetes', 'Cardiovascular'],
+              datasets: [
+                {
+                  label: 'Hombres',
+                  data: [34, 40],
+                  backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)'
+                  ],
+                  borderColor: [
+                  'rgba(255, 99, 132, 1)'
+                  ],
+                  borderWidth: 1
+                },
+                {
+                  label: 'Mujeres',
+                  data: [37, 31],
+                  backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)'
+                  ],
+                  borderColor: [
+                    'rgba(75, 192, 192, 1)'
+                  ],
+                  borderWidth: 1
+                }
+              ]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              },
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: 'Usuarios por género y enfermedad'
+                }
+              }
+          }
+      });
+    </script>
+</body>
+</html>

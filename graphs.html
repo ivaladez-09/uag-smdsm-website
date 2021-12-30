@@ -14,158 +14,272 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      function httpGetAsync(theUrl, callback)
+      {
+          var xmlHttp = new XMLHttpRequest();
+          xmlHttp.onreadystatechange = function() { 
+              //console.log('Status code: ' + xmlHttp.status);
+              if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                console.log('Status code: ' + xmlHttp.status + '\nResponse: ' + xmlHttp.responseText + ' \nUrl: ' + theUrl);
+                callback(xmlHttp.responseText);
+              }
+          }
+          xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+          xmlHttp.send(null);
+      }
+    </script>
     
     <script>
-      var ctx1 = document.getElementById('myChart1');
-      var myChart = new Chart(ctx1, {
-          type: 'bar',
-          data: {
-              labels: ['0-18 años', '19-40 años', '41-100 años'],
-              datasets: [
-                {
-                  label: 'Hombres',
-                  data: [34, 41, 27],
-                  backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
-                  ],
-                  borderColor: [
-                  'rgba(255, 99, 132, 1)'
-                  ],
-                  borderWidth: 1
-                },
-                {
-                  label: 'Mujeres',
-                  data: [15, 37, 32],
-                  backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(75, 192, 192, 1)'
-                  ],
-                  borderWidth: 1
-                }
-              ]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
+      let menData1 = [];
+      let womenData1 = [];
+
+      function createBarChart1(menData, womenData){
+        var ctx1 = document.getElementById('myChart1');
+        var myChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['0-18 años', '19-40 años', '41-100 años'],
+                datasets: [
+                  {
+                    label: 'Hombres',
+                    data: menData,
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                  },
+                  {
+                    label: 'Mujeres',
+                    data: womenData,
+                    backgroundColor: [
+                      'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
                   }
-              },
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'top',
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 },
-                title: {
-                  display: true,
-                  text: 'Usuarios por género y rango de edad'
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Usuarios por género y rango de edad'
+                  }
                 }
-              }
-          }
-      });
+            }
+        });
+      }
+      
+      function addMenResponse1(response){
+        var resp = JSON.parse(response);
+        if (menData1.length < 3){
+          menData1.push(resp.count);
+        }
+        if (menData1.length === 3){
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/2003-01-01/2021-12-31', addWomenResponse1); // 0-18 años
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/1980-01-01/2002-12-31', addWomenResponse1); // 19-40 años
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/1920-01-01/1979-12-31', addWomenResponse1); // 41-100 años
+        }
+      }
+
+      function addWomenResponse1(response){
+        var resp = JSON.parse(response);
+        if (womenData1.length < 3){
+          womenData1.push(resp.count);
+        }
+        if (womenData1.length === 3){
+          createBarChart1(menData1, womenData1);
+        }
+      }
+
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/2003-01-01/2021-12-31', addMenResponse1); // 0-18 años
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/1980-01-01/2002-12-31', addMenResponse1); // 19-40 años
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/1920-01-01/1979-12-31', addMenResponse1); // 41-100 años
+      
     </script>
 
     <script>
-      var ctx1 = document.getElementById('myChart2');
-      var myChart = new Chart(ctx1, {
-          type: 'bar',
-          data: {
-              labels: ['Obesidad centralizada', 'Trigliceridos', 'Colesterol HDL', 'Presión arterial', 'Glucosa en la sangre'],
-              datasets: [
-                {
-                  label: 'Hombres',
-                  data: [12, 21, 27, 17, 5, 14, 3],
-                  backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
-                  ],
-                  borderColor: [
-                  'rgba(255, 99, 132, 1)'
-                  ],
-                  borderWidth: 1
-                },
-                {
-                  label: 'Mujeres',
-                  data: [10, 23, 21, 11, 8, 17, 7],
-                  backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(75, 192, 192, 1)'
-                  ],
-                  borderWidth: 1
-                }
-              ]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
+      let menData2 = [];
+      let womenData2 = [];
+
+      function createBarChart2(menData, womenData){
+        var ctx2 = document.getElementById('myChart2');
+        var myChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Obesidad centralizada', 'Trigliceridos', 'Colesterol HDL', 'Presión arterial', 'Glucosa en la sangre'],
+                datasets: [
+                  {
+                    label: 'Hombres',
+                    data: menData,
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                  },
+                  {
+                    label: 'Mujeres',
+                    data: womenData,
+                    backgroundColor: [
+                      'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
                   }
-              },
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'top',
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 },
-                title: {
-                  display: true,
-                  text: 'Usuarios por género y factor de riesgo'
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Usuarios por género y factor de riesgo'
+                  }
                 }
-              }
-          }
-      });
+            }
+        });
+      }
+      
+      function addMenResponse2(response){
+        var resp = JSON.parse(response);
+        if (menData2.length < 5){
+          menData2.push(resp.count);
+        }
+        if (menData2.length === 5){
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/central obesity', addWomenResponse2);
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/triglycerides', addWomenResponse2);
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/hdl', addWomenResponse2);
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/blood pressure', addWomenResponse2);
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/plasma glucose', addWomenResponse2);
+        }
+      }
+
+      function addWomenResponse2(response){
+        var resp = JSON.parse(response);
+        if (womenData2.length < 5){
+          womenData2.push(resp.count);
+        }
+        if (womenData2.length === 5){
+          createBarChart2(menData2, womenData2);
+        }
+      }
+
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/central obesity', addMenResponse2);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/triglycerides', addMenResponse2);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/hdl', addMenResponse2);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/blood pressure', addMenResponse2);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/plasma glucose', addMenResponse2);
+
     </script>
 
     <script>
-      var ctx1 = document.getElementById('myChart3');
-      var myChart = new Chart(ctx1, {
-          type: 'bar',
-          data: {
-              labels: ['Diabetes', 'Cardiovascular'],
-              datasets: [
-                {
-                  label: 'Hombres',
-                  data: [34, 40],
-                  backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
-                  ],
-                  borderColor: [
-                  'rgba(255, 99, 132, 1)'
-                  ],
-                  borderWidth: 1
-                },
-                {
-                  label: 'Mujeres',
-                  data: [37, 31],
-                  backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(75, 192, 192, 1)'
-                  ],
-                  borderWidth: 1
-                }
-              ]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
+      let menData3 = [];
+      let womenData3 = [];
+
+      function createBarChart3(menData, womenData){
+        var ctx3 = document.getElementById('myChart3');
+        var myChart = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: ['Diabetes', 'Cardiovascular'],
+                datasets: [
+                  {
+                    label: 'Hombres',
+                    data: menData,
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                  },
+                  {
+                    label: 'Mujeres',
+                    data: womenData,
+                    backgroundColor: [
+                      'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
                   }
-              },
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'top',
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 },
-                title: {
-                  display: true,
-                  text: 'Usuarios por género y enfermedad'
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Usuarios por género y enfermedad'
+                  }
                 }
-              }
-          }
-      });
+            }
+        });
+      }
+      
+      function addWomenResponse3(response){
+        var resp = JSON.parse(response);
+        if (womenData3.length < 2){
+          womenData3.push(resp.count);
+        }
+        if (womenData3.length === 2){
+          createBarChart3(menData3, womenData3);
+        }
+      }
+
+      function addMenResponse3(response){
+        var resp = JSON.parse(response);
+        if (menData3.length < 2){
+          menData3.push(resp.count);
+        }
+        if (menData3.length === 2){
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/female/diabetes', addWomenResponse3);
+          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/female/cardiovascular', addWomenResponse3);
+        }
+      }
+
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/male/diabetes', addMenResponse3);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/male/cardiovascular', addMenResponse3);
+
     </script>
 </body>
 </html>

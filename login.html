@@ -110,7 +110,7 @@
           }
           xmlHttp.open("POST", theUrl, true); // true for asynchronous 
           xmlHttp.setRequestHeader("Content-Type", "application/json");
-          var data = JSON.stringify({"user": jsonObject.user, "password": jsonObject.password});
+          var data = JSON.stringify({"username": '' +  jsonObject.user, "password": '' + jsonObject.password});
           xmlHttp.send(data);
       }
 

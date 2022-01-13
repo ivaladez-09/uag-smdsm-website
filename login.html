@@ -23,7 +23,7 @@
                   <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                     <ul class="nav">
                         <li class="nav-item">
-                          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                          <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">General</a>
@@ -33,7 +33,10 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">LogIn</a>
-                          </li>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="graphs.html">Graphs</a>
+                        </li>
                       </ul>
                   </div>
                 </div>
@@ -104,8 +107,6 @@
               if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
                 console.log('Status code: ' + xmlHttp.status + '\nResponse: ' + xmlHttp.responseText + ' \nUrl: ' + theUrl);
                 callback(xmlHttp.responseText);
-              } else {
-                console.log('Error code: ' + xmlHttp.status + '\nResponse text: ' + xmlHttp.responseText);
               }
           }
           xmlHttp.open("POST", theUrl, true); // true for asynchronous 
@@ -114,12 +115,25 @@
           xmlHttp.send(data);
       }
 
+      function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+      }
+
       function saveJWT(jwtResponse){
         var resp = JSON.parse(jwtResponse);
         tokens.push(resp.access);
         tokens.push(resp.refresh);
 
         console.log(tokens);
+        setCookie('jwtToken', resp.access, 0.01);
+        setCookie('jwtTokenRefresh', resp.refresh, 0.01);
+        window.location.href = "graphs.html";
       }
 
       const form  = document.getElementById('formLogin');

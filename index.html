@@ -25,16 +25,16 @@
                           <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">General</a>
+                            <a class="nav-link" aria-current="page" href="#section1">General</a>
                           </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#">Acerca de</a>
+                          <a class="nav-link" href="#section2">Acerca de</a>
                         </li>
                         <li class="nav-item" id="loginLi">
                             <a class="nav-link" href="login.html">LogIn</a>
                         </li>
-                        <li class="nav-item" id="logoutLi">
-                          <a class="nav-link" href="logout.html">LogOut</a>
+                        <li class="nav-item" id="logoutLi" onclick="logout();">
+                          <a class="nav-link" href="">LogOut</a>
                       </li>
                         <li class="nav-item" id="graphsLi">
                           <a class="nav-link" href="graphs.html">Graphs</a>
@@ -53,7 +53,7 @@
     
 
     <main>
-        <section>
+        <section id="section1">
             <div class="container mt-5 mb-5">
                 <div class="row">
                     <div class="col mt-2">
@@ -100,7 +100,7 @@
             </div>
         </section>
 
-        <section>
+        <section id="section2">
             <div class="container mt-5 mb-5 d-flex justify-content-center">
                 <div class="row" style="padding: 2rem;">
                   <div class="col mt-2" style="width: 40rem; height: 30rem;">
@@ -171,6 +171,19 @@
         document.getElementById('logoutLi').style.visibility = 'visible';
         document.getElementById('loginLi').style.visibility = 'hidden';
         document.getElementById('graphsLi').style.visibility = 'visible';
+      }
+
+      function deleteCookie(name) {
+        var expires = "";
+        var date = new Date();
+        date.setTime(date.getTime() - 1000);
+        expires = "; expires=" + date.toUTCString();
+        document.cookie = name + "= "  + expires + "; path=/";
+      }
+
+      function logout(){
+        deleteCookie('jwtToken', null, 0.01);
+        deleteCookie('jwtTokenRefresh', null, 0.01);
       }
     </script>
   </body>

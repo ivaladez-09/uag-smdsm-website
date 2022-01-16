@@ -82,8 +82,16 @@
     </script>
     
     <script>
-      let menData1 = [];
-      let womenData1 = [];
+      let menData1 = {
+        one: -1,
+        two: -1,
+        three: -1
+      };
+      let womenData1 = {
+        one: -1,
+        two: -1,
+        three: -1
+      };
 
       function createBarChart1(menData, womenData){
         var ctx1 = document.getElementById('myChart1');
@@ -136,37 +144,82 @@
         });
       }
       
-      function addMenResponse1(response){
+      function requestWomenData1(){
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/2003-01-01/2021-12-31', addWomenResponse11); // 0-18 años
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/1980-01-01/2002-12-31', addWomenResponse12); // 19-40 años
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/1920-01-01/1979-12-31', addWomenResponse13); // 41-100 años
+      }
+
+      function addMenResponse11(response){
         var resp = JSON.parse(response);
-        if (menData1.length < 3){
-          menData1.push(resp.count);
-        }
-        if (menData1.length === 3){
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/2003-01-01/2021-12-31', addWomenResponse1); // 0-18 años
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/1980-01-01/2002-12-31', addWomenResponse1); // 19-40 años
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/1920-01-01/1979-12-31', addWomenResponse1); // 41-100 años
+        menData1.one = resp.count;
+        if (menData1.one != -1 && menData1.two != -1 && menData1.three != -1){
+          requestWomenData1();
         }
       }
 
-      function addWomenResponse1(response){
+      function addMenResponse12(response){
         var resp = JSON.parse(response);
-        if (womenData1.length < 3){
-          womenData1.push(resp.count);
-        }
-        if (womenData1.length === 3){
-          createBarChart1(menData1, womenData1);
+        menData1.two = resp.count;
+        if (menData1.one != -1 && menData1.two != -1 && menData1.three != -1){
+          requestWomenData1();
         }
       }
 
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/2003-01-01/2021-12-31', addMenResponse1); // 0-18 años
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/1980-01-01/2002-12-31', addMenResponse1); // 19-40 años
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/1920-01-01/1979-12-31', addMenResponse1); // 41-100 años
+      function addMenResponse13(response){
+        var resp = JSON.parse(response);
+        menData1.three = resp.count;
+        if (menData1.one != -1 && menData1.two != -1 && menData1.three != -1){
+          requestWomenData1();
+        }
+      }
+
+
+      function addWomenResponse11(response){
+        var resp = JSON.parse(response);
+        womenData1.one = resp.count;
+        if (womenData1.one != -1 && womenData1.two != -1 && womenData1.three != -1){
+          createBarChart1([menData1.one, menData1.two, menData1.three], [womenData1.one, womenData1.two, womenData1.three]);
+        }
+      }
+
+      function addWomenResponse12(response){
+        var resp = JSON.parse(response);
+        womenData1.two = resp.count;
+        if (womenData1.one != -1 && womenData1.two != -1 && womenData1.three != -1){
+          createBarChart1([menData1.one, menData1.two, menData1.three], [womenData1.one, womenData1.two, womenData1.three]);
+        }
+      }
+
+      function addWomenResponse13(response){
+        var resp = JSON.parse(response);
+        womenData1.three = resp.count;
+        if (womenData1.one != -1 && womenData1.two != -1 && womenData1.three != -1){
+          createBarChart1([menData1.one, menData1.two, menData1.three], [womenData1.one, womenData1.two, womenData1.three]);
+        }
+      }
+
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/2003-01-01/2021-12-31', addMenResponse11); // 0-18 años
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/1980-01-01/2002-12-31', addMenResponse12); // 19-40 años
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/1920-01-01/1979-12-31', addMenResponse13); // 41-100 años
       
     </script>
 
     <script>
-      let menData2 = [];
-      let womenData2 = [];
+      let menData2 = {
+        one: -1,
+        two: -1,
+        three: -1,
+        four: -1,
+        five: -1
+      };
+      let womenData2 = {
+        one: -1,
+        two: -1,
+        three: -1,
+        four: -1,
+        five: -1
+      };
 
       function createBarChart2(menData, womenData){
         var ctx2 = document.getElementById('myChart2');
@@ -219,41 +272,116 @@
         });
       }
       
-      function addMenResponse2(response){
+      function requestWomenData2(){
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/central obesity', addWomenResponse21);
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/triglycerides', addWomenResponse22);
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/hdl', addWomenResponse23);
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/blood pressure', addWomenResponse24);
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/plasma glucose', addWomenResponse25);
+      }
+
+      function addMenResponse21(response){
         var resp = JSON.parse(response);
-        if (menData2.length < 5){
-          menData2.push(resp.count);
-        }
-        if (menData2.length === 5){
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/central obesity', addWomenResponse2);
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/triglycerides', addWomenResponse2);
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/hdl', addWomenResponse2);
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/blood pressure', addWomenResponse2);
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/plasma glucose', addWomenResponse2);
+        menData2.one = resp.count;
+        if (menData2.one != -1 && menData2.two != -1 && menData2.three != -1 && menData2.four != -1 && menData2.five != -1){
+          requestWomenData2();
         }
       }
 
-      function addWomenResponse2(response){
+      function addMenResponse22(response){
         var resp = JSON.parse(response);
-        if (womenData2.length < 5){
-          womenData2.push(resp.count);
-        }
-        if (womenData2.length === 5){
-          createBarChart2(menData2, womenData2);
+        menData2.two = resp.count;
+        if (menData2.one != -1 && menData2.two != -1 && menData2.three != -1 && menData2.four != -1 && menData2.five != -1){
+          requestWomenData2();
         }
       }
 
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/central obesity', addMenResponse2);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/triglycerides', addMenResponse2);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/hdl', addMenResponse2);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/blood pressure', addMenResponse2);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/plasma glucose', addMenResponse2);
+      function addMenResponse23(response){
+        var resp = JSON.parse(response);
+        menData2.three = resp.count;
+        if (menData2.one != -1 && menData2.two != -1 && menData2.three != -1 && menData2.four != -1 && menData2.five != -1){
+          requestWomenData2();
+        }
+      }
+
+      function addMenResponse24(response){
+        var resp = JSON.parse(response);
+        menData2.four = resp.count;
+        if (menData2.one != -1 && menData2.two != -1 && menData2.three != -1 && menData2.four != -1 && menData2.five != -1){
+          requestWomenData2();
+        }
+      }
+
+      function addMenResponse25(response){
+        var resp = JSON.parse(response);
+        menData2.five = resp.count;
+        if (menData2.one != -1 && menData2.two != -1 && menData2.three != -1 && menData2.four != -1 && menData2.five != -1){
+          requestWomenData2();
+        }
+      }
+
+      function addWomenResponse21(response){
+        var resp = JSON.parse(response);
+        womenData2.one = resp.count;
+        if (womenData2.one != -1 && womenData2.two != -1 && womenData2.three != -1 && womenData2.four != -1 && womenData2.five != -1){
+          createBarChart2([menData2.one, menData2.two, menData2.three, menData2.four, menData2.five], 
+          [womenData2.one, womenData2.two, womenData2.three, womenData2.four, womenData2.five]);
+        }
+      }
+
+      function addWomenResponse22(response){
+        var resp = JSON.parse(response);
+        womenData2.two = resp.count;
+        if (womenData2.one != -1 && womenData2.two != -1 && womenData2.three != -1 && womenData2.four != -1 && womenData2.five != -1){
+          createBarChart2([menData2.one, menData2.two, menData2.three, menData2.four, menData2.five], 
+          [womenData2.one, womenData2.two, womenData2.three, womenData2.four, womenData2.five]);
+        }
+      }
+
+      function addWomenResponse23(response){
+        var resp = JSON.parse(response);
+        womenData2.three = resp.count;
+        if (womenData2.one != -1 && womenData2.two != -1 && womenData2.three != -1 && womenData2.four != -1 && womenData2.five != -1){
+          createBarChart2([menData2.one, menData2.two, menData2.three, menData2.four, menData2.five], 
+          [womenData2.one, womenData2.two, womenData2.three, womenData2.four, womenData2.five]);
+        }
+      }
+
+      function addWomenResponse24(response){
+        var resp = JSON.parse(response);
+        womenData2.four = resp.count;
+        if (womenData2.one != -1 && womenData2.two != -1 && womenData2.three != -1 && womenData2.four != -1 && womenData2.five != -1){
+          createBarChart2([menData2.one, menData2.two, menData2.three, menData2.four, menData2.five], 
+          [womenData2.one, womenData2.two, womenData2.three, womenData2.four, womenData2.five]);
+        }
+      }
+
+      function addWomenResponse25(response){
+        var resp = JSON.parse(response);
+        womenData2.five = resp.count;
+        if (womenData2.one != -1 && womenData2.two != -1 && womenData2.three != -1 && womenData2.four != -1 && womenData2.five != -1){
+          createBarChart2([menData2.one, menData2.two, menData2.three, menData2.four, menData2.five], 
+          [womenData2.one, womenData2.two, womenData2.three, womenData2.four, womenData2.five]);
+        }
+      }
+
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/central obesity', addMenResponse21);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/triglycerides', addMenResponse22);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/hdl', addMenResponse23);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/blood pressure', addMenResponse24);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/plasma glucose', addMenResponse25);
 
     </script>
 
     <script>
-      let menData3 = [];
-      let womenData3 = [];
+      let menData3 = {
+        one: -1,
+        two: -1
+      };
+      let womenData3 = {
+        one: -1,
+        two: -1
+      };
 
       function createBarChart3(menData, womenData){
         var ctx3 = document.getElementById('myChart3');
@@ -306,29 +434,45 @@
         });
       }
       
-      function addWomenResponse3(response){
+      function addWomenResponse31(response){
         var resp = JSON.parse(response);
-        if (womenData3.length < 2){
-          womenData3.push(resp.count);
-        }
-        if (womenData3.length === 2){
-          createBarChart3(menData3, womenData3);
+        womenData3.one = resp.count;
+        if (womenData3.one != -1 && womenData3.two != -1){
+          createBarChart3([menData3.one, menData3.two], [womenData3.one, womenData3.two]);
         }
       }
 
-      function addMenResponse3(response){
+      function addWomenResponse32(response){
         var resp = JSON.parse(response);
-        if (menData3.length < 2){
-          menData3.push(resp.count);
-        }
-        if (menData3.length === 2){
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/female/diabetes', addWomenResponse3);
-          httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/female/cardiovascular', addWomenResponse3);
+        womenData3.two = resp.count;
+        if (womenData3.one != -1 && womenData3.two != -1){
+          createBarChart3([menData3.one, menData3.two], [womenData3.one, womenData3.two]);
         }
       }
 
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/male/diabetes', addMenResponse3);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/male/cardiovascular', addMenResponse3);
+      function requestWomenData3(){
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/female/diabetes', addWomenResponse31);
+        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/female/cardiovascular', addWomenResponse32);
+      }
+
+      function addMenResponse31(response){
+        var resp = JSON.parse(response);
+        menData3.one = resp.count;
+        if (menData3.one != -1 && menData3.two != -1){
+          requestWomenData3();
+        }
+      }
+
+      function addMenResponse32(response){
+        var resp = JSON.parse(response);
+        menData3.two = resp.count;
+        if (menData3.one != -1 && menData3.two != -1){
+          requestWomenData3();
+        }
+      }
+
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/male/diabetes', addMenResponse31);
+      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/male/cardiovascular', addMenResponse32);
 
     </script>
 </body>

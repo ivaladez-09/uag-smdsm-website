@@ -23,8 +23,8 @@
                     <li class="nav-item">
                       <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
                     </li>
-                    <li class="nav-item" id="logoutLi">
-                      <a class="nav-link" href="logout.html">LogOut</a>
+                    <li class="nav-item" id="logoutLi" onclick="logout();">
+                      <a class="nav-link" href="">LogOut</a>
                     </li>
                     <li class="nav-item" id="graphsLi">
                       <a class="nav-link" href="graphs.html">Graphs</a>
@@ -37,9 +37,23 @@
   </header>
 
     <div>
-        <canvas id="myChart1"></canvas>
-        <canvas id="myChart2"></canvas>
-        <canvas id="myChart3"></canvas>
+      <div class="container mt-5 mb-5">
+        <div class="row">
+          <div class="col mt-2">
+            <canvas id="myChart1"></canvas>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mt-2">
+            <canvas id="myChart2"></canvas>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mt-2">
+            <canvas id="myChart3"></canvas>
+          </div>
+        </div>
+      
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -73,6 +87,21 @@
           xmlHttp.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
           xmlHttp.send(null);
       }
+
+      function deleteCookie(name) {
+        var expires = "";
+        var date = new Date();
+        date.setTime(date.getTime() - 1000);
+        expires = "; expires=" + date.toUTCString();
+        document.cookie = name + "= "  + expires + "; path=/";
+      }
+
+      function logout(){
+        deleteCookie('jwtToken', null, 0.01);
+        deleteCookie('jwtTokenRefresh', null, 0.01);
+        window.location.href = "index.html";
+      }
+
     </script>
     
     <script>
@@ -98,10 +127,10 @@
                     label: 'Hombres',
                     data: menData,
                     backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)'
+                      'rgba(75, 192, 192, 0.2)'
                     ],
                     borderColor: [
-                    'rgba(255, 99, 132, 1)'
+                      'rgba(75, 192, 192, 1)'
                     ],
                     borderWidth: 1
                   },
@@ -109,10 +138,10 @@
                     label: 'Mujeres',
                     data: womenData,
                     backgroundColor: [
-                      'rgba(75, 192, 192, 0.2)'
+                      'rgba(255, 99, 132, 0.2)'
                     ],
                     borderColor: [
-                      'rgba(75, 192, 192, 1)'
+                      'rgba(255, 99, 132, 1)'
                     ],
                     borderWidth: 1
                   }
@@ -131,7 +160,10 @@
                   },
                   title: {
                     display: true,
-                    text: 'Usuarios por género y rango de edad'
+                    text: 'Usuarios por género y rango de edad',
+                    font: {
+                      size: 28
+                    }
                   }
                 }
             }
@@ -226,10 +258,10 @@
                     label: 'Hombres',
                     data: menData,
                     backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)'
+                      'rgba(75, 192, 192, 0.2)'
                     ],
                     borderColor: [
-                    'rgba(255, 99, 132, 1)'
+                      'rgba(75, 192, 192, 1)'
                     ],
                     borderWidth: 1
                   },
@@ -237,10 +269,12 @@
                     label: 'Mujeres',
                     data: womenData,
                     backgroundColor: [
-                      'rgba(75, 192, 192, 0.2)'
+                      'rgba(255, 99, 132, 0.2)'
+                      
                     ],
                     borderColor: [
-                      'rgba(75, 192, 192, 1)'
+                      'rgba(255, 99, 132, 1)'
+                      
                     ],
                     borderWidth: 1
                   }
@@ -259,7 +293,10 @@
                   },
                   title: {
                     display: true,
-                    text: 'Usuarios por género y factor de riesgo'
+                    text: 'Usuarios por género y factor de riesgo',
+                    font: {
+                      size: 28
+                    }
                   }
                 }
             }
@@ -388,10 +425,10 @@
                     label: 'Hombres',
                     data: menData,
                     backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)'
+                      'rgba(75, 192, 192, 0.2)'
                     ],
                     borderColor: [
-                    'rgba(255, 99, 132, 1)'
+                      'rgba(75, 192, 192, 1)'
                     ],
                     borderWidth: 1
                   },
@@ -399,10 +436,11 @@
                     label: 'Mujeres',
                     data: womenData,
                     backgroundColor: [
-                      'rgba(75, 192, 192, 0.2)'
+                    'rgba(255, 99, 132, 0.2)'
+                      
                     ],
                     borderColor: [
-                      'rgba(75, 192, 192, 1)'
+                    'rgba(255, 99, 132, 1)'
                     ],
                     borderWidth: 1
                   }
@@ -421,7 +459,10 @@
                   },
                   title: {
                     display: true,
-                    text: 'Usuarios por género y enfermedad'
+                    text: 'Usuarios por género y enfermedad',
+                    font: {
+                      size: 28
+                    }
                   }
                 }
             }

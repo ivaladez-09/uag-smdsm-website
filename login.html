@@ -119,8 +119,8 @@
         tokens.push(resp.refresh);
 
         console.log(tokens);
-        setCookie('jwtToken', resp.access, 0.01);
-        setCookie('jwtTokenRefresh', resp.refresh, 0.01);
+        setCookie('jwtToken', resp.access, 0.1);
+        setCookie('jwtTokenRefresh', resp.refresh, 0.1);
         window.location.href = "graphs.html";
       }
 

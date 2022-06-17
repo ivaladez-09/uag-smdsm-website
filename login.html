@@ -47,7 +47,7 @@
                   
                       <!-- Login Form -->
                       <form method="post" action="login.html" id="formLogin">
-                        <input type="text" id="userLogin" class="fadeIn second" name="login" placeholder="user">
+                        <input type="text" id="userLogin" class="fadeIn second" name="login" placeholder="usernameOrEmail">
                         <input type="text" id="passwordLogin" class="fadeIn third" name="login" placeholder="password">
                         <input type="submit" class="fadeIn fourth" value="Log In">
                       </form>
@@ -86,6 +86,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
       let tokens = [];
+      const baseUrl = "http://127.0.0.1:8080/smdsm/api";
+      const authorizePath = "/auth/signin";
 
       function httpPostAsync(theUrl, callback, jsonObject)
       {
@@ -99,7 +101,7 @@
           }
           xmlHttp.open("POST", theUrl, true); // true for asynchronous 
           xmlHttp.setRequestHeader("Content-Type", "application/json");
-          var data = JSON.stringify({"username": '' +  jsonObject.user, "password": '' + jsonObject.password});
+          var data = JSON.stringify({"usernameOrEmail": '' +  jsonObject.usernameOrEmail, "password": '' + jsonObject.password});
           xmlHttp.send(data);
       }
 
@@ -115,12 +117,12 @@
 
       function saveJWT(jwtResponse){
         var resp = JSON.parse(jwtResponse);
-        tokens.push(resp.access);
-        tokens.push(resp.refresh);
+        tokens.push(resp.accessToken);
+        //tokens.push(resp.refresh);
 
         console.log(tokens);
-        setCookie('jwtToken', resp.access, 0.1);
-        setCookie('jwtTokenRefresh', resp.refresh, 0.1);
+        setCookie('jwtToken', resp.accessToken, 0.1);
+        //setCookie('jwtTokenRefresh', resp.refresh, 0.1);
         window.location.href = "graphs.html";
       }
 
@@ -131,22 +133,22 @@
         // IMPORTANT: Stop form submission
         event.preventDefault();
 
-        let user = form.elements['userLogin'].value;
+        let username_or_email = form.elements['userLogin'].value;
         let password = form.elements['passwordLogin'].value;
 
         let jwtJson = {
-          user: user,
+          usernameOrEmail: username_or_email,
           password: password
         };
 
         var json = JSON.stringify(jwtJson);
 
         console.log(json);
-        console.log('User: ' + user + '\nPassword: ' + password);
+        console.log('UsernameOrEmail: ' + username_or_email + '\nPassword: ' + password);
 
         // https://smdsm.free.beeceptor.com/my/api/path
         // http://127.0.0.1:8000/data_app/api/token/
-        httpPostAsync('http://127.0.0.1:8000/data_app/api/token/', saveJWT, jwtJson);
+        httpPostAsync(baseUrl + authorizePath, saveJWT, jwtJson);
 
       });
       

@@ -160,7 +160,7 @@
       }
 
       const jwtToken = getCookie('jwtToken');
-      const jwtTokenRefresh = getCookie('jwtTokenRefresh');
+      //const jwtTokenRefresh = getCookie('jwtTokenRefresh');
 
       if(jwtToken == null && jwtTokenRefresh == null){
         document.getElementById('logoutLi').style.visibility = 'hidden';
@@ -183,7 +183,7 @@
 
       function logout(){
         deleteCookie('jwtToken', null, 0.01);
-        deleteCookie('jwtTokenRefresh', null, 0.01);
+        //deleteCookie('jwtTokenRefresh', null, 0.01);
       }
     </script>
   </body>

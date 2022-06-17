@@ -71,8 +71,38 @@
       }
 
       const jwtToken = getCookie('jwtToken');
-      const jwtTokenRefresh = getCookie('jwtTokenRefresh');
+      //const jwtTokenRefresh = getCookie('jwtTokenRefresh');
+      const baseUrl = "http://127.0.0.1:8080/smdsm/api";
+      const countDiseasesPath = "/users/count-disease";
+      const countRiskFactorsPath = "/users/count-risk-factor";
+      const countDateRangePath = "/users/count-date-range";
 
+      const countDateRangeQueryParamsFemale1 = "?startDate=2003-01-01&endDate=2021-12-31&gender=female"; // 0-18 años
+      const countDateRangeQueryParamsFemale2 = "?startDate=1980-01-01&endDate=2002-12-31&gender=female"; // 19-40 años
+      const countDateRangeQueryParamsFemale3 = "?startDate=1920-01-01&endDate=1979-12-31&gender=female"; // 41-100 años
+
+      const countDateRangeQueryParamsMale1 = "?startDate=2003-01-01&endDate=2021-12-31&gender=male";
+      const countDateRangeQueryParamsMale2 = "?startDate=1980-01-01&endDate=2002-12-31&gender=male";
+      const countDateRangeQueryParamsMale3 = "?startDate=1920-01-01&endDate=1979-12-31&gender=male";
+
+      const countRiskFactorQueryParamsFemale1 = "?riskFactor=central_obesity&gender=female";
+      const countRiskFactorQueryParamsFemale2 = "?riskFactor=triglycerides&gender=female";
+      const countRiskFactorQueryParamsFemale3 = "?riskFactor=hdl&gender=female";
+      const countRiskFactorQueryParamsFemale4 = "?riskFactor=blood_pressure&gender=female";
+      const countRiskFactorQueryParamsFemale5 = "?riskFactor=plasma_glucose&gender=female";
+
+      const countRiskFactorQueryParamsMale1 = "?riskFactor=central_obesity&gender=male";
+      const countRiskFactorQueryParamsMale2 = "?riskFactor=triglycerides&gender=male";
+      const countRiskFactorQueryParamsMale3 = "?riskFactor=hdl&gender=male";
+      const countRiskFactorQueryParamsMale4 = "?riskFactor=blood_pressure&gender=male";
+      const countRiskFactorQueryParamsMale5 = "?riskFactor=plasma_glucose&gender=male";
+
+      const countDiseaseQueryParamsFemale1 = "?disease=diabetes&gender=female";
+      const countDiseaseQueryParamsFemale2 = "?disease=cardiovascular&gender=female";
+
+      const countDiseaseQueryParamsMale1 = "?disease=diabetes&gender=male";
+      const countDiseaseQueryParamsMale2 = "?disease=cardiovascular&gender=male";
+            
       function httpGetAsync(theUrl, callback)
       {
           var xmlHttp = new XMLHttpRequest();
@@ -83,6 +113,7 @@
                 callback(xmlHttp.responseText);
               }
           }
+          console.log(jwtToken);
           xmlHttp.open("GET", theUrl, true); // true for asynchronous 
           xmlHttp.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
           xmlHttp.send(null);
@@ -98,7 +129,7 @@
 
       function logout(){
         deleteCookie('jwtToken', null, 0.01);
-        deleteCookie('jwtTokenRefresh', null, 0.01);
+        //deleteCookie('jwtTokenRefresh', null, 0.01);
         window.location.href = "index.html";
       }
 
@@ -171,9 +202,9 @@
       }
       
       function requestWomenData1(){
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/2003-01-01/2021-12-31', addWomenResponse11); // 0-18 años
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/1980-01-01/2002-12-31', addWomenResponse12); // 19-40 años
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/female/1920-01-01/1979-12-31', addWomenResponse13); // 41-100 años
+        httpGetAsync(baseUrl + countDateRangePath + countDateRangeQueryParamsFemale1, addWomenResponse11); // 0-18 años
+        httpGetAsync(baseUrl + countDateRangePath + countDateRangeQueryParamsFemale2, addWomenResponse12); // 19-40 años
+        httpGetAsync(baseUrl + countDateRangePath + countDateRangeQueryParamsFemale3, addWomenResponse13); // 41-100 años
       }
 
       function addMenResponse11(response){
@@ -225,9 +256,9 @@
         }
       }
 
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/2003-01-01/2021-12-31', addMenResponse11); // 0-18 años
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/1980-01-01/2002-12-31', addMenResponse12); // 19-40 años
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/date_range/male/1920-01-01/1979-12-31', addMenResponse13); // 41-100 años
+      httpGetAsync(baseUrl + countDateRangePath + countDateRangeQueryParamsMale1, addMenResponse11); // 0-18 años
+      httpGetAsync(baseUrl + countDateRangePath + countDateRangeQueryParamsMale2, addMenResponse12); // 19-40 años
+      httpGetAsync(baseUrl + countDateRangePath + countDateRangeQueryParamsMale3, addMenResponse13); // 41-100 años
       
     </script>
 
@@ -304,11 +335,11 @@
       }
       
       function requestWomenData2(){
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/central obesity', addWomenResponse21);
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/triglycerides', addWomenResponse22);
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/hdl', addWomenResponse23);
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/blood pressure', addWomenResponse24);
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/female/plasma glucose', addWomenResponse25);
+        httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsFemale1, addWomenResponse21);
+        httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsFemale2, addWomenResponse22);
+        httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsFemale3, addWomenResponse23);
+        httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsFemale4, addWomenResponse24);
+        httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsFemale5, addWomenResponse25);
       }
 
       function addMenResponse21(response){
@@ -396,11 +427,11 @@
         }
       }
 
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/central obesity', addMenResponse21);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/triglycerides', addMenResponse22);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/hdl', addMenResponse23);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/blood pressure', addMenResponse24);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/risk_factor/male/plasma glucose', addMenResponse25);
+      httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsMale1, addMenResponse21);
+      httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsMale2, addMenResponse22);
+      httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsMale3, addMenResponse23);
+      httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsMale4, addMenResponse24);
+      httpGetAsync(baseUrl + countRiskFactorsPath + countRiskFactorQueryParamsMale5, addMenResponse25);
 
     </script>
 
@@ -486,8 +517,8 @@
       }
 
       function requestWomenData3(){
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/female/diabetes', addWomenResponse31);
-        httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/female/cardiovascular', addWomenResponse32);
+        httpGetAsync(baseUrl + countDiseasesPath + countDiseaseQueryParamsFemale1, addWomenResponse31);
+        httpGetAsync(baseUrl + countDiseasesPath + countDiseaseQueryParamsFemale2, addWomenResponse32);
       }
 
       function addMenResponse31(response){
@@ -506,8 +537,8 @@
         }
       }
 
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/male/diabetes', addMenResponse31);
-      httpGetAsync('http://127.0.0.1:8000/data_app/users/count/disease/male/cardiovascular', addMenResponse32);
+      httpGetAsync(baseUrl + countDiseasesPath + countDiseaseQueryParamsMale1, addMenResponse31);
+      httpGetAsync(baseUrl + countDiseasesPath + countDiseaseQueryParamsMale2, addMenResponse32);
 
     </script>
 </body>

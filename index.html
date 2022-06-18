@@ -162,7 +162,8 @@
       const jwtToken = getCookie('jwtToken');
       //const jwtTokenRefresh = getCookie('jwtTokenRefresh');
 
-      if(jwtToken == null && jwtTokenRefresh == null){
+      //if(jwtToken == null && jwtTokenRefresh == null){
+      if(jwtToken == null){
         document.getElementById('logoutLi').style.visibility = 'hidden';
         document.getElementById('loginLi').style.visibility = 'visible';
         document.getElementById('graphsLi').style.visibility = 'hidden';

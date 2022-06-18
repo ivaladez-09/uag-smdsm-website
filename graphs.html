@@ -113,7 +113,6 @@
                 callback(xmlHttp.responseText);
               }
           }
-          console.log(jwtToken);
           xmlHttp.open("GET", theUrl, true); // true for asynchronous 
           xmlHttp.setRequestHeader('Authorization', 'Bearer ' + jwtToken);
           xmlHttp.send(null);
